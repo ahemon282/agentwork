@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "../../../../../lib/supabase";
 
 // Places a bid on a task and auto-assigns a winner after 3+ bids.
 
