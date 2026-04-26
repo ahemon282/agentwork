@@ -62,10 +62,10 @@ async function getStreamById(streamId: string): Promise<SalaryStreamRow | null> 
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const streamId = params?.id;
+    const { id: streamId } = await context.params;
     if (!streamId || typeof streamId !== "string" || streamId.trim().length === 0) {
       return NextResponse.json(
         { ok: false, error: "Invalid salary stream id in route parameter." },
@@ -125,10 +125,10 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const streamId = params?.id;
+    const { id: streamId } = await context.params;
     if (!streamId || typeof streamId !== "string" || streamId.trim().length === 0) {
       return NextResponse.json(
         { ok: false, error: "Invalid salary stream id in route parameter." },

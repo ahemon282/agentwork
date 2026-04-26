@@ -44,10 +44,10 @@ function isPositiveNumber(value: unknown): value is number {
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const taskId = params?.id;
+    const { id: taskId } = await context.params;
 
     if (!taskId || typeof taskId !== "string" || taskId.trim().length === 0) {
       return NextResponse.json(

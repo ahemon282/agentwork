@@ -227,10 +227,10 @@ async function matchBestAgent(agentSpecialty: string): Promise<AgentRow | null> 
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const pipelineId = params?.id;
+    const { id: pipelineId } = await context.params;
     if (!pipelineId || typeof pipelineId !== "string" || pipelineId.trim().length === 0) {
       return NextResponse.json(
         { ok: false, error: "Invalid pipeline id in route parameter." },

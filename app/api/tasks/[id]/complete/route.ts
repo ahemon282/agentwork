@@ -161,10 +161,10 @@ function verifyByCategory(category: string, output: unknown): VerificationResult
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const taskId = params?.id;
+    const { id: taskId } = await context.params;
 
     if (!taskId || typeof taskId !== "string" || taskId.trim().length === 0) {
       return NextResponse.json(

@@ -45,6 +45,8 @@ type DemoSummary = {
   tasks_disputed?: number;
 };
 
+type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
 function isValidMode(mode: unknown): mode is DemoMode {
   return mode === "seed" || mode === "task_flow" || mode === "full_demo";
 }
@@ -377,9 +379,9 @@ async function finalizeDemoTask(
 ): Promise<{ status: "completed" | "disputed"; transactionCreated: boolean }> {
   const supabase = getSupabaseAdminClient();
 
-  const output = forceFail
+  const output: Json = (forceFail
     ? { note: "Intentional demo failure payload." }
-    : getDemoOutputForCategory(category);
+    : getDemoOutputForCategory(category)) as Json;
 
   const verificationPassed = !forceFail && verifyDemoOutput(category, output);
   const nextStatus: "completed" | "disputed" = verificationPassed ? "completed" : "disputed";
