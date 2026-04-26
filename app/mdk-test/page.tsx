@@ -11,8 +11,9 @@ export default function MdkTestPage() {
     setError(null);
 
     const result = await createCheckout({
+      type: "AMOUNT",
       amount: 100,
-      currency: "SATS",
+      currency: "SAT",
       successUrl: "/checkout/success",
       title: "MDK Test Checkout",
     });
